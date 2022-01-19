@@ -1,4 +1,4 @@
-FROM golang:1.13.12
+FROM golang:1.16
 
 ARG URL=https://github.com/algorand/go-algorand
 ARG BRANCH=master
