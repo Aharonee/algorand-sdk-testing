@@ -1,4 +1,5 @@
-FROM golang:1.16
+FROM golang:1.16.11
+
 
 ARG URL=https://github.com/algorand/go-algorand
 ARG BRANCH=master
@@ -23,12 +24,12 @@ RUN git clone --single-branch --branch "${BRANCH}" "${URL}" && \
 
 # Configure private network
 RUN python3 /tmp/docker/algod/setup.py configure \
- --bin-dir "$BIN_DIR" \
- --network-dir /opt/testnetwork \
- --network-template /tmp/network_config/future_template.json \
- --network-token aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa \
- --algod-port 60000 \
- --kmd-port 60001
+    --bin-dir "$BIN_DIR" \
+    --network-dir /opt/testnetwork \
+    --network-template /tmp/network_config/future_template.json \
+    --network-token aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa \
+    --algod-port 60000 \
+    --kmd-port 60001
 
 # Start algod
 CMD ["/usr/bin/env", "bash", "-c", "python3 /tmp/docker/algod/setup.py start --bin-dir \"$BIN_DIR\" --network-dir \"/opt/testnetwork\" --copy-genesis-to \"/genesis-file\""]
